@@ -1,10 +1,22 @@
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Button, Divider, PaperProvider, useTheme} from 'react-native-paper';
 import {Stack, useRouter} from "expo-router";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
+import {
+    decrement,
+    increment,
+    // incrementAsync,
+    incrementByAmount,
+    incrementIfOdd,
+    selectCount,
+    selectStatus,
+} from "@/app/redux/counterSlice";
 
 export default function Index() {
     const theme = useTheme();
     const router = useRouter();
+    const dispatch = useAppDispatch()
+    const count = useAppSelector(selectCount)
 
     const styles = StyleSheet.create({
         container: {
@@ -32,6 +44,31 @@ export default function Index() {
         },
         text: {
             color: theme.colors.secondary,
+        },
+        row: {
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+        },
+        buttonText: {
+            color: "rgb(112, 76, 182)",
+            fontSize: 32,
+            textAlign: "center",
+        },
+        value: {
+            fontSize: 78,
+            paddingHorizontal: 16,
+            marginTop: 2,
+            color: "white",
+        },
+        buttonTouchable: {
+            backgroundColor: "rgba(112, 76, 182, 0.1)",
+            borderRadius: 2,
+            paddingLeft: 12,
+            paddingRight: 12,
+            paddingBottom: 4,
+            margin: 2,
         }
     });
 
@@ -46,28 +83,49 @@ export default function Index() {
                 />
 
                 <Text style={styles.text}>
-                    WelcomeScreen
+                    Splash Screen. Click below to proceed.
                 </Text>
+                <Divider style={styles.divider}/>
+
+                <View style={styles.row}>
+                    <TouchableOpacity
+                        style={styles.buttonTouchable}
+                        aria-label="Decrement value"
+                        onPress={() => dispatch(decrement())}
+                    >
+                        <Text style={styles.buttonText}>-</Text>
+                    </TouchableOpacity>
+                    <Text aria-label="Count" style={styles.value}>
+                        {count}
+                    </Text>
+                    <TouchableOpacity
+                        style={styles.buttonTouchable}
+                        aria-label="Increment value"
+                        onPress={() => dispatch(increment())}
+                    >
+                        <Text style={styles.buttonText}>+</Text>
+                    </TouchableOpacity>
+                </View>
+
                 <Divider style={styles.divider}/>
                 <Button
                     icon="google"
                     mode="contained-tonal"
                     style={styles.button}
-                    onPress={() => router.push("/(tabs)/home")}
+                    onPress={() => router.push("/(tabs)/welcome")}
                 >
-                    Continue with Google
+                    Begin auth flow
                 </Button>
                 <Divider style={styles.divider}/>
                 <Button
                     icon="account"
                     mode="contained-tonal"
                     style={styles.button}
-                    onPress={() => router.push("/(tabs)/explore")}
+                    onPress={() => router.push("/review")}
                 >
-                    Continue as Guest
+                    Go to Stack flow
                 </Button>
             </View>
         </PaperProvider>
     );
-
 }
