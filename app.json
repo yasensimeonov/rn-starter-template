@@ -13,9 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.rnstarter.facebooklogin",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.rnstarter.facebooklogin",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -27,10 +29,30 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "753484756938758",
+          "clientToken": "0abdb42fb051cd9043a94a60dc58a224",
+          "displayName": "Login Tutorial",
+          "scheme": "fb753484756938758",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "isAutoInitEnabled": true
+        }
+      ],
       "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "7dd5f286-c1ea-4d67-80c4-d83a129a827d"
+      }
     }
   }
 }
