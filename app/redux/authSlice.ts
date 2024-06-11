@@ -80,14 +80,14 @@ const doFacebookLogin = async (dispatch: ThunkDispatch<{ auth: AuthSliceState; c
         return dispatch(facebook_login_fail);
     }
 
-    // Once signed in, get the users AccessToken
+    // Once signed in, get the user's AccessToken
     const data = await AccessToken.getCurrentAccessToken();
 
     if (!data) {
         return dispatch(facebook_login_fail);
     }
 
-    await AsyncStorage.setItem('fb_token', data.accessToken);
+    await AsyncStorage.setItem("fb_token", data.accessToken);
 
     dispatch(facebook_login_success(data.accessToken));
 };

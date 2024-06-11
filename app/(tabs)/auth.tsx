@@ -1,38 +1,43 @@
 import {StyleSheet, Image, Platform, View, Text} from 'react-native';
 import {Button, Divider, useTheme} from "react-native-paper";
 import {useRouter} from "expo-router";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks"
+import { facebookLogin, selectToken } from "@/app/redux/authSlice";
 
 export default function AuthScreen() {
-  const theme = useTheme();
-  const router = useRouter();
+    const theme = useTheme();
+    const router = useRouter();
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    button: {
-      alignItems: 'center',
-      // marginTop: 20
-      // marginBottom: 100
-    },
-    image: {
-      // marginBottom: 280,
-      resizeMode: 'contain',
-      height: 300,
-      width: 300
-    },
-    divider: {
-      width: '60%',
-      color: theme.colors.secondary,
-      marginTop: 10,
-      marginBottom: 10
-    },
-    text: {
-      color: theme.colors.secondary,
-    }
-  });
+    const dispatch = useAppDispatch();
+    const fbIDtoken = useAppSelector(selectToken);
+
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        button: {
+            alignItems: 'center',
+            // marginTop: 20
+            // marginBottom: 100
+        },
+        image: {
+            // marginBottom: 280,
+            resizeMode: 'contain',
+            height: 300,
+            width: 300
+        },
+        divider: {
+            width: '60%',
+            color: theme.colors.secondary,
+            marginTop: 10,
+            marginBottom: 10
+        },
+        text: {
+            color: theme.colors.secondary,
+        }
+    });
 
   return (
       <View style={styles.container}>
@@ -44,13 +49,16 @@ export default function AuthScreen() {
         <Text>AuthScreen</Text>
         <Divider style={styles.divider}/>
         <Button
-            icon="google"
+            icon="facebook"
             mode="contained-tonal"
             style={styles.button}
-            onPress={() => router.push("/(tabs)/map")}
+            onPress={ () => dispatch(facebookLogin()) }
         >
-          Go to Map (Tab)
+          FB Auth test
         </Button>
+        <Divider style={styles.divider}/>
+        <Text>Facebook ID Token is: </Text>
+        <Text>{ fbIDtoken }</Text>
       </View>
   );
 }
