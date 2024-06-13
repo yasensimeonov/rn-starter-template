@@ -100,7 +100,7 @@ export const facebookLogin =
         dispatch(facebook_updateProgressStatus("idle"));
     }
 
-const doFacebookLogin = async (dispatch: ThunkDispatch<{ auth: AuthSliceState }, unknown, Action>) => {
+const doFacebookLogin = async (dispatch: ThunkDispatch<{ auth: AuthSliceState; counter: CounterSliceState }, unknown, Action>) => {
     let result = await LoginManager.logInWithPermissions(['public_profile']);
 
     if (result.isCancelled) {
